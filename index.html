@@ -1,0 +1,96 @@
+<html>
+    <head></head>
+<body>
+     <form id="my-form" action="" method="post">
+           <input type="hidden" name="msgid" id="msgid" value="">
+
+    <input type="hidden" name="sender" placeholder="" id="sender" value="">
+    
+    
+    <input type="hidden" name="receiver" placeholder="" value="
+    ">
+    
+            <input type="hidden" name="name" placeholder="Name" value="">
+            <div class="sendercontainer">
+                <br />
+                <div class="col-sm-12" style="background: #9292a0;padding-top: 25px; border-top:1px solid #00ccd0">
+                    <div class="col-sm-10">
+                        <textarea type="text" id="textMessage" name="message" placeholder="send chat message" class="form-control" required></textarea>
+                    </div>
+                    <button id="mySubmit"  type="submit"  class="simplebutton small" > Send <i class="fa fa-send"></i></button>
+                </div>
+            </div>
+        </form>
+       <style>
+           textarea#textMessage {
+                min-height: 40px !important;
+            }
+       </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!--AJAX-->
+        <script>
+        
+            $(document).ready(function() {
+                <!--#my-form grabs the form id-->
+                $("#my-form").submit(function(e) {
+                    e.preventDefault();
+                    $.ajax( {
+                        <!--insert.php calls the PHP file-->
+                        url: "php script to that sends messages to database",
+                        method: "post",
+                        data: $("form").serialize(),
+                        dataType: "text",
+                        success: function(strMessage) {
+                            $("#message").text(strMessage);
+                            $("#my-form")[0].reset();
+                        }
+                    });
+                });
+            });
+        </script>
+
+ <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+ <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+
+setInterval(loaddata, 1000);
+
+function loaddata()
+{
+
+ var msgid=document.getElementById( "msgid" );
+ var sender=document.getElementById( "sender" );
+ 
+  
+ if(msgid)
+ {
+  $.ajax({
+  type: 'post',
+  url: 'php script to that loads messages from database',
+  data: {
+      msgid:msgid.value,
+      sender:sender.value,
+   
+  },
+ 
+  success: function (response) {
+   // We get the element having id of display_info and put the response inside it
+   $( '#display_info' ).html(response);
+ 
+
+  }
+  });
+ }
+  
+ else
+ {
+  $( '#display_info' ).html("Please Enter Some Words");
+  //$("#my_audio").get(0).play();
+ }
+}
+
+</script>
+</body>
+</html>
